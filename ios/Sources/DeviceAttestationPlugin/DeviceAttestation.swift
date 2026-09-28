@@ -108,11 +108,11 @@ struct AttestationError: Error {
     }
 
     private func map(_ error: Error?) -> AttestationError {
-        if let dc = error as? DCError {
-            switch dc.code {
-            case .featureUnsupported: return AttestationError(code: "API_NOT_AVAILABLE", message: dc.localizedDescription)
-            case .serverUnavailable: return AttestationError(code: "NETWORK", message: dc.localizedDescription)
-            default: return AttestationError(code: "UNKNOWN", message: dc.localizedDescription)
+        if let dcError = error as? DCError {
+            switch dcError.code {
+            case .featureUnsupported: return AttestationError(code: "API_NOT_AVAILABLE", message: dcError.localizedDescription)
+            case .serverUnavailable: return AttestationError(code: "NETWORK", message: dcError.localizedDescription)
+            default: return AttestationError(code: "UNKNOWN", message: dcError.localizedDescription)
             }
         }
         return AttestationError(code: "UNKNOWN", message: error?.localizedDescription ?? "unknown")
